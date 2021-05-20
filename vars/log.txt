@@ -1,0 +1,5 @@
+Help file for log
+
+INFO
+WARN
+CRIT
