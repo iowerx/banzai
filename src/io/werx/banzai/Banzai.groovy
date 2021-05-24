@@ -30,6 +30,13 @@ def stages = stringsToEcho.collectEntries {
 }
 
 script.parallel stages
+
+def bzStages = new BanzaiStages()
+
+bzStages.add("1st", { script.info("first") } )
+bzStages.add("2nd", { script.info("second") } )
+
+script.parallel bzStages.tasks
          
             }
         }
