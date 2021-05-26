@@ -7,7 +7,7 @@ class BanzaiStages implements Serializable {
     BanzaiStages() {
     }
 
-    add( String name, Closure task) {
+    add( String name, Closure task ) {
         tasks[name] = task
     }
           
