@@ -7,16 +7,8 @@ class BanzaiStages implements Serializable {
     BanzaiStages() {
     }
 
-    add( String name, Closure task ) {
+    void add( String name, Closure task ) {
         tasks[name] = task
     }
-          
-
-//def transformIntoStep(inputString) {
-//    return {
-//            script.info inputString
-//    }
-//}
-    
     
 }

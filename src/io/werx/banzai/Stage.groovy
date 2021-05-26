@@ -7,7 +7,7 @@ class Stage implements Serializable {
     Stage() {
     }
 
-    add( String name, Closure task ) {
+    void add( String name, Closure task ) {
         tasks[name] = task
     }
           
