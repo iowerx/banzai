@@ -38,7 +38,7 @@ def bzStages = new BanzaiStages()
 
 bzStages.add("1st", { script.info("first") } )
 bzStages.add("2nd", { script.info("second") } )
-bzStages.add("3rd", c )
+//bzStages.add("3rd", c )
 
 script.parallel bzStages.tasks
          
