@@ -4,7 +4,7 @@ class Stage implements Serializable {
 
     def tasks = [:]
     
-    Stage(String name, ) {
+    Stage() {
     }
 
     add( String name, Closure task) {
