@@ -20,8 +20,11 @@ class Banzai implements Serializable {
                     script.error "this is error."
                     script.fatal "this is fatal."
                     script.log "plain log message."
+                    script.echo script.log.getLevel() 
           //}
 
+
+// Tasks from array:
 
 def stringsToEcho = ["a", "b", "c", "d"]
 
@@ -29,20 +32,45 @@ def stages = stringsToEcho.collectEntries {
     ["echoing ${it}" : transformIntoStep(it)]
 }
 
-script.parallel stages
+// script.parallel stages
+
+// BanzaiStages: 
+
+def banzaiStages = new BanzaiStages()
+
+banzaiStages.add("1st", { script.info("first") } )
+banzaiStages.add("2nd", { script.info("second") } )
+
+// script.parallel banzaiStages.tasks
+
+// BanzaiStage
+
+// script.banzai.stages["bz First",  new BanzaiStage( { script.info("bz First") } ) ]
+// script.banzai.stages["bz Second", new BanzaiStage( { second } ) ]
 
 
-def bzStages = new BanzaiStages()
+script.banzai.addStage "Stage 1", { script.info("First") }
+script.banzai.addStage "Stage 2", { aStage() }
+script.banzai.addStage "Stage 3.", third
 
-bzStages.add("1st", { script.info("first") } )
-bzStages.add("2nd", { script.info("second") } )
+script.banzai.execStages()
 
-script.parallel bzStages.tasks
-         
             }
         }
-    }
+    } // run() 
 
+
+    void aStage() {
+        script.echo "A method wrapped in a closure." 
+    }
+    
+def third = { script.info("Closure variable.") }
+
+
+
+def aStageTask() {
+
+}
     
 def transformIntoStep(inputString) {
     // We need to wrap what we return in a Groovy closure, or else it's invoked

@@ -10,3 +10,10 @@
 
 
 */
+
+def func( String s, Closure c ) {
+
+
+    c() // should call c
+
+}
