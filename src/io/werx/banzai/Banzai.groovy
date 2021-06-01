@@ -1,8 +1,12 @@
 package io.werx.banzai
 
+import io.werx.banzai.LogLevel
+
 class Banzai implements Serializable {
 
     def script
+
+    LogLevel logLevel = LogLevel.INFO
     
     Banzai(def script) {
         this.script = script
@@ -11,8 +15,9 @@ class Banzai implements Serializable {
     def run() {
         script.ansiColor('xterm') {
               script.timestamps {
-    
 
+                  script.echo "logLevel: ${logLevel}"
+                  script.echo "logLevel: ${logLevel.value}"
           //node { 
                     script.debug "this is debug."
                     script.info "this is info."
@@ -22,7 +27,6 @@ class Banzai implements Serializable {
                     script.log "plain log message."
                     script.echo script.log.getLevel() 
           //}
-
 
 // Tasks from array:
 
@@ -67,11 +71,11 @@ script.banzai.execStages()
 def third = { script.info("Closure variable.") }
 
 
-
 def aStageTask() {
 
 }
-    
+
+
 def transformIntoStep(inputString) {
     // We need to wrap what we return in a Groovy closure, or else it's invoked
     // when this method is called, not when we pass it to parallel.
@@ -81,6 +85,5 @@ def transformIntoStep(inputString) {
             script.info inputString
     }
 }
-    
-    
+
 }
