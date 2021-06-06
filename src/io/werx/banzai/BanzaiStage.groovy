@@ -1,5 +1,6 @@
 package io.werx.banzai
 
+
 class BanzaiStage implements Serializable {
 
     def task

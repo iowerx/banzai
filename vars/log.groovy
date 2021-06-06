@@ -1,7 +1,8 @@
 import io.werx.banzai.LogLevel
+import static io.werx.banzai.LogLevel.*
 
 @groovy.transform.Field
-LogLevel level = LogLevel.INFO
+LogLevel level = INFO
 
 
 def setLevel(def level) {
@@ -9,27 +10,27 @@ def setLevel(def level) {
 }
 
 def fatal(def message) {
-    call(LogLevel.FATAL, message)
+    call(FATAL, message)
 }
 
 def error(def message) {
-    call(LogLevel.ERROR, message)
+    call(ERROR, message)
 }
 
 def warn(def message) {
-    call(LogLevel.WARN, message)
+    call(WARN, message)
 }
 
 def info(def message) {
-    call(LogLevel.INFO, message)
+    call(INFO, message)
 }
 
 def debug(def message) {
-    call(LogLevel.DEBUG, message)
+    call(DEBUG, message)
 }
 
 def trace(def message) {
-    call(LogLevel.TRACE, message)
+    call(TRACE, message)
 }
 
 def call(LogLevel logLevel = LogLevel.ALL, String message = "Empty.") {

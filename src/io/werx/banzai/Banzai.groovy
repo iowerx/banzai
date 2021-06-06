@@ -1,5 +1,11 @@
 package io.werx.banzai
 
+import hudson.model.Result
+import static hudson.model.Result.ABORTED
+import static hudson.model.Result.FAILURE
+import static hudson.model.Result.NOT_BUILT
+import static hudson.model.Result.SUCCESS
+import static hudson.model.Result.UNSTABLE
 import static LogLevel.*
 
 class Banzai implements Serializable {
@@ -14,22 +20,22 @@ class Banzai implements Serializable {
         script.ansiColor('xterm') {
             script.timestamps {
 
+                script.result.set(SUCCESS)
+
                 // LogLevel Usage:
                 LogLevel logLevel = DEBUG
                 script.echo "setLevel to ${DEBUG}"
                 script.log.setLevel(logLevel)
                 script.echo "level: ${script.log.level}"
                 script.echo "value: ${script.log.level.value}"
-                script.debug "this is debug."
-                script.info "this is info."
-                script.warn "this is warning."
-                script.error "this is error."
-                script.fatal "this is fatal."
-                script.log DEBUG, "this too is debug."
-
-                //node {
-
-                //}
+                script.log TRACE, "this is trace."
+                script.log DEBUG, "this is debug."
+                script.log INFO, "this is info."
+                script.log WARN, "this is warning."
+                script.log ERROR, "this is error."
+                script.log FATAL, "this is fatal."
+                script.log ALL, "this is all - no use case."
+                script.log OFF, "this is off, no use cases."
 
                 // Tasks from array:
                 def stringsToEcho = ["a", "b", "c", "d"]
@@ -40,25 +46,35 @@ class Banzai implements Serializable {
 
                 // script.parallel stages
 
-                // BanzaiStages: 
-
                 def banzaiStages = new BanzaiStages()
 
-                banzaiStages.add("1st", { script.info("first") })
-                banzaiStages.add("2nd", { script.info("second") })
+                banzaiStages.add("1st", {
+                    script.log INFO, "first"
+                    script.result UNSTABLE
+                })
 
-                // script.parallel banzaiStages.tasks
+                banzaiStages.add("2nd", {
+                    script.log INFO, "second"
+                    script.result FAILURE
+                })
+
+                banzaiStages.add("3rd", {
+                    script.log INFO, "third"
+                    script.result NOT_BUILT, "just because."
+                })
+
+                script.parallel banzaiStages.tasks
 
                 // BanzaiStage
 
-                // script.banzai.stages["bz First",  new BanzaiStage( { script.info("bz First") } ) ]
-                // script.banzai.stages["bz Second", new BanzaiStage( { second } ) ]
-
-                script.banzai.addStage "Stage 1", { script.info("First") }
+                script.banzai.addStage "Stage 1", { script.log INFO, "First" }
                 script.banzai.addStage "Stage 2", { aStage() }
                 script.banzai.addStage "Stage 3.", third
 
                 script.banzai.execStages()
+
+                // If this far, then success.
+                script.result.set(SUCCESS)
 
             }
         }
@@ -69,22 +85,22 @@ class Banzai implements Serializable {
         script.echo "A method wrapped in a closure."
     }
 
-def third = { script.info("Closure variable.") }
+    def third = { script.log INFO, "Closure variable." }
 
 
-def aStageTask() {
+    def aStageTask() {
 
-}
-
-
-def transformIntoStep(inputString) {
-    // We need to wrap what we return in a Groovy closure, or else it's invoked
-    // when this method is called, not when we pass it to parallel.
-    // To do this, you need to wrap the code below in { }, and either return
-    // that explicitly, or use { -> } syntax.
-    return {
-            script.info inputString
     }
-}
+
+
+    def transformIntoStep(inputString) {
+        // We need to wrap what we return in a Groovy closure, or else it's invoked
+        // when this method is called, not when we pass it to parallel.
+        // To do this, you need to wrap the code below in { }, and either return
+        // that explicitly, or use { -> } syntax.
+        return {
+            script.log INFO, inputString
+        }
+    }
 
 }
