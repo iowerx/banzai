@@ -9,57 +9,56 @@ class Banzai implements Serializable {
     Banzai(def script) {
         this.script = script
     }
-          
+
     def run() {
         script.ansiColor('xterm') {
-              script.timestamps {
+            script.timestamps {
 
-                  LogLevel logLevel = DEBUG
-                  script.echo "setLevel to ${LogLevel.DEBUG}"
-                  script.log.setLevel(logLevel)
+                // LogLevel Usage:
+                LogLevel logLevel = DEBUG
+                script.echo "setLevel to ${DEBUG}"
+                script.log.setLevel(logLevel)
+                script.echo "level: ${script.log.level}"
+                script.echo "value: ${script.log.level.value}"
+                script.debug "this is debug."
+                script.info "this is info."
+                script.warn "this is warning."
+                script.error "this is error."
+                script.fatal "this is fatal."
+                script.log DEBUG, "this too is debug."
 
-                  script.echo "level: ${script.log.level}"
-                  script.echo "value: ${script.log.level.value}"
+                //node {
 
-          //node {
-                  script.log.debug "this is script.log debug."
-                    script.info "this is info."
-                    script.warn "this is warning."
-                    script.error "this is error."
-                    script.fatal "this is fatal."
-                    script.log DEBUG, "this too is debug."
-          //}
+                //}
 
-// Tasks from array:
+                // Tasks from array:
+                def stringsToEcho = ["a", "b", "c", "d"]
 
-def stringsToEcho = ["a", "b", "c", "d"]
+                def stages = stringsToEcho.collectEntries {
+                    ["echoing ${it}": transformIntoStep(it)]
+                }
 
-def stages = stringsToEcho.collectEntries {
-    ["echoing ${it}" : transformIntoStep(it)]
-}
+                // script.parallel stages
 
-// script.parallel stages
+                // BanzaiStages: 
 
-// BanzaiStages: 
+                def banzaiStages = new BanzaiStages()
 
-def banzaiStages = new BanzaiStages()
+                banzaiStages.add("1st", { script.info("first") })
+                banzaiStages.add("2nd", { script.info("second") })
 
-banzaiStages.add("1st", { script.info("first") } )
-banzaiStages.add("2nd", { script.info("second") } )
+                // script.parallel banzaiStages.tasks
 
-// script.parallel banzaiStages.tasks
+                // BanzaiStage
 
-// BanzaiStage
+                // script.banzai.stages["bz First",  new BanzaiStage( { script.info("bz First") } ) ]
+                // script.banzai.stages["bz Second", new BanzaiStage( { second } ) ]
 
-// script.banzai.stages["bz First",  new BanzaiStage( { script.info("bz First") } ) ]
-// script.banzai.stages["bz Second", new BanzaiStage( { second } ) ]
+                script.banzai.addStage "Stage 1", { script.info("First") }
+                script.banzai.addStage "Stage 2", { aStage() }
+                script.banzai.addStage "Stage 3.", third
 
-
-script.banzai.addStage "Stage 1", { script.info("First") }
-script.banzai.addStage "Stage 2", { aStage() }
-script.banzai.addStage "Stage 3.", third
-
-script.banzai.execStages()
+                script.banzai.execStages()
 
             }
         }
