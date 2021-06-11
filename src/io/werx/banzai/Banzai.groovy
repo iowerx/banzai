@@ -38,29 +38,31 @@ class Banzai implements Serializable {
                 script.log OFF, "this is off, no use cases."
 
                 // Tasks from array:
+                /*
                 def stringsToEcho = ["a", "b", "c", "d"]
 
                 def stages = stringsToEcho.collectEntries {
                     ["echoing ${it}": transformIntoStep(it)]
                 }
 
-                // script.parallel stages
+                script.parallel stages
+                */
 
                 def banzaiStages = new BanzaiStages()
 
                 banzaiStages.add("1st", {
                     script.log INFO, "first"
-                    script.result UNSTABLE
+                    // script.result UNSTABLE
                 })
 
                 banzaiStages.add("2nd", {
                     script.log INFO, "second"
-                    script.result FAILURE
+                    // script.result FAILURE
                 })
 
                 banzaiStages.add("3rd", {
                     script.log INFO, "third"
-                    script.result NOT_BUILT, "just because."
+                    // script.result NOT_BUILT, "just because."
                 })
 
                 script.parallel banzaiStages.tasks
@@ -87,11 +89,9 @@ class Banzai implements Serializable {
 
     def third = { script.log INFO, "Closure variable." }
 
-
     def aStageTask() {
 
     }
-
 
     def transformIntoStep(inputString) {
         // We need to wrap what we return in a Groovy closure, or else it's invoked
