@@ -3,22 +3,14 @@ import hudson.model.Result
 /**
  * hudson.model.Result:
  *
- * static Result 	ABORTED
- * The build was manually aborted.
- * BallColor 	color
- * Default ball color for this status.
- * boolean 	completeBuild
- * Is this a complete build - i.e.
- * static com.thoughtworks.xstream.converters.SingleValueConverter 	conv
- * static Result 	FAILURE
- * The build had a fatal error.
- * static Result 	NOT_BUILT
- * The module was not built.
- * int 	ordinal
- * Bigger numbers are worse.
- * static Result 	SUCCESS
- * The build had no errors.
- * static Result 	UNSTABLE
+ * ABORTED   - The build was manually aborted.
+ * FAILURE   - The build had a fatal error.
+ * NOT_BUILT - The module was not built.
+ * SUCCESS   - The build had no errors.
+ * UNSTABLE  - The build completed but with errors. 
+ * boolean completeBuild - Is this a complete build
+ * ordinal   - Bigger numbers are worse.
+ *
  */
 
 Result get() {
@@ -26,14 +18,13 @@ Result get() {
 }
 
 void set(Result result) {
-        currentBuild.result = result
+        currentBuild.result = result.toString()
 }
 
 def to(Result r, String because = '') {
-        String msg = "Transition job from ${currentBuild.result} to ${r} "
-        msg = because ? (msg + because) : msg
+        String msg = "Transition job from ${currentBuild.result} to ${r} " + because
         echo msg
-        currentBuild.result = r
+        currentBuild.result = r.toString()
 }
 
 def call( Result r, String because = '') {

@@ -1,12 +1,18 @@
 import io.werx.banzai.LogLevel
+import io.werx.banzai.singleton.LogLevelSingleton
+
 import static io.werx.banzai.LogLevel.*
 
-@groovy.transform.Field
-LogLevel level = INFO
+// TODO - Field is apparently NOT a singleton
+//@groovy.transform.Field
+//LogLevel level = INFO
 
-
-def setLevel(def level) {
-    this.level = level
+// Requires a singleton
+def getLevel() {
+    LogLevelSingleton.instance.getLevel()
+}
+def setLevel(LogLevel level) {
+    LogLevelSingleton.instance.setLevel(level)
 }
 
 def fatal(def message) {
@@ -33,8 +39,8 @@ def trace(def message) {
     call(TRACE, message)
 }
 
-def call(LogLevel logLevel = LogLevel.ALL, String message = "Empty.") {
-    if (level.value >= logLevel.value) {
-        echo "${logLevel}: ${message}"
+def call(LogLevel level = LogLevel.ALL, String message = "Empty.") {
+    if (getLevel().value >= level.value) {
+        echo "${level}: ${message}"
     }
 }

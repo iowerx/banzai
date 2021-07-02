@@ -1,0 +1,25 @@
+#!/usr/bin/env groovy
+@Library('Banzai@main') _
+
+import hudson.model.Result
+import io.werx.banzai.BzStage
+import io.werx.banzai.BzStages
+
+import static hudson.model.Result.*
+import static io.werx.banzai.LogLevel.*
+
+
+node {
+    timestamps {
+
+        echo "LogLevel is: ${log.getLevel()}"
+
+        BzStages bzStages = new BzStages(this)
+
+        def onAlways = { echo "Always." }
+        bzStages.post << ['always': onAlways]
+
+        bzStages.getPost()['always'].call()
+
+    }
+}
