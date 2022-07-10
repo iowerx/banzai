@@ -33,7 +33,7 @@
         <groovy.spock.version>1.1-groovy-2.4</groovy.spock.version>
         <groovy.gmaven.pluginVersion>1.6.1</groovy.gmaven.pluginVersion>
 
-        <jenkins.version>2.176.4</jenkins.version>
+        <jenkins.version>2.319</jenkins.version>
         <jenkins.servlet.version>3.1.0</jenkins.servlet.version>
         <jenkins.workflow.cps.version>2.74</jenkins.workflow.cps.version>
 
