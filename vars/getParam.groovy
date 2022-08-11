@@ -24,7 +24,7 @@ def call( String name ) {
     // Otherwise, Parameter.
     // Boolean may be null, uses short circuit evaluation. 
     // !pval is Groovy truth applicable to strings.
-    def val = priority ? eVal : ((pVal == null || !pval) ? eVal : pVal)
+    def val = priority ? eVal : ((pVal == null || !pVal) ? eVal : pVal)
     
     // Boolean parameter types are returned as boolean.
     switch (pVal?.getClass()?.getName()) {
