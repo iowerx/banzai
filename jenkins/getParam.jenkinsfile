@@ -71,15 +71,6 @@ node('CTS_NGC_SLAVE') {
         echo "PARAM_IS_SET_ENV_IS_EMPTY:       env == ${PARAM_IS_SET_ENV_IS_EMPTY}"
         echo ""
 
-        //echo "TRUE:     ${env.ENV_I_TRUE}"
-        //echo "FALSE:    ${env.I_FALSE}"
-        //echo "I_TRUE:   ${env.I_TRUE}"
-        //echo "I_FALSE:  ${env.I_FALSE}"
-        //echo "YES:      ${env.YES}"
-        //echo "NO:       ${env.NO}"
-        //echo "I_YES:    ${env.ENV_I_YES}"
-        //echo "I_NO:     ${env.ENV_I_NO}"
-
         echo "Parameter variables:"
         echo "PARAM_IS_TRUE_BUT_ENV_IS_FALSE:  param == ${params.PARAM_IS_TRUE_BUT_ENV_IS_FALSE}"
         echo "PARAM_IS_FALSE_BUT_ENV_IS_TRUE:  param == ${params.PARAM_IS_FALSE_BUT_ENV_IS_TRUE}"
@@ -109,14 +100,6 @@ node('CTS_NGC_SLAVE') {
         echo "ENV_IS_NOT_PRESENT:              getParam() == ${getParam('ENV_IS_NOT_PRESENT')}"
         echo "ENV_IS_SET_PARAM_IS_EMPTY:       getParam() == ${getParam('ENV_IS_SET_PARAM_IS_EMPTY')}"
         echo "PARAM_IS_SET_ENV_IS_EMPTY:       getParam() == ${getParam('PARAM_IS_SET_ENV_IS_EMPTY')}"
-    }
-
-    stage( "Save Param") {
-
-        echo "Use Rebuild to confirm changed parameters."
-        echo "${getParam('FOO')}"
-        echo "${getParam('BAR')}"
-
     }
 
 }

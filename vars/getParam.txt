@@ -1,5 +1,5 @@
 
-getEnvOrParam - Get a parameter from either the environment or the parameters maps.
+getParam - Get a parameter from either the environment or the parameters maps.
 
 If an environment variable is defined, use the value to override the parameter,
 however, if the environment variable begins with "!" than override regardless.
@@ -7,12 +7,13 @@ however, if the environment variable begins with "!" than override regardless.
     env.someVal = "USE_ME_IF_PARAM_HAS_PRECEDENCE"
     env.importantVal = "!USE_ME_ALWAYS"
 
- 	           Parameter 	Environment  Value
-Present 	   no           no           null
-Present 	   no           yes          Environment
-Present 	   yes          no           Parameter
-Present 	   yes          yes          Parameter
+ 	       Parameter    Environment  Value
+Present        no           no           null
+Present        no           yes          Environment
+Present        yes          no           Parameter
+Present        yes          yes          Parameter
 Present        yes          !yes         Environment
+# Boolean Values:
 true/'false'   true         'false'      true
 false/'true'   false        'true'       false
 true/'!false'  true         !false       false
