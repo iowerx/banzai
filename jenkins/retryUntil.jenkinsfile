@@ -1,0 +1,45 @@
+#!/usr/bin/env groovy
+@Library('banzai@main') _
+
+import hudson.model.Result
+
+import static hudson.model.Result.*
+
+
+env.TRUE = 'true'
+env.FALSE = 'false'
+env.I_TRUE = '!true'
+env.I_FALSE = '!false'
+
+env.YES = "yes"
+env.NO = "no"
+env.I_YES = "!yes"
+env.I_NO = "!no"
+
+
+node('CTS_NGC_SLAVE') {
+
+    properties( [
+            parameters( [
+                    booleanParam( name: "I_TRUE", defaultValue: false, description: "important environemment." ),
+                    booleanParam( name: "I_FALSE", defaultValue: true, description: "important environment." ),
+            ] )
+    ] )
+
+    stage("Setup") {
+
+        echo "Environment variables:"
+        echo ""
+
+        echo "Parameter variables:"
+        echo ""
+
+    }
+
+    stage("retryUntil()  ") {
+
+        echo "retryUntil()"
+
+    }
+
+}

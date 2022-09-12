@@ -1,0 +1,10 @@
+
+retryUntil - Execute a Closure repeatedly until it succeeds
+
+    Map     config
+    Closure task
+
+   // callback
+    // pauseFor
+    // maxTime
+    // maxTries
