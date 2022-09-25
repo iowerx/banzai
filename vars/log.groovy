@@ -1,18 +1,19 @@
 import io.werx.banzai.LogLevel
-import io.werx.banzai.singleton.LogLevelSingleton
-
 import static io.werx.banzai.LogLevel.*
 
-// TODO - Field is apparently NOT a singleton
-//@groovy.transform.Field
-//LogLevel level = INFO
+@groovy.transform.Field
+LogLevel level
 
 // Requires a singleton
 def getLevel() {
-    LogLevelSingleton.instance.getLevel()
+    if (this.level == null) {
+        this.level = INFO
+    }
+    this.level
 }
+
 def setLevel(LogLevel level) {
-    LogLevelSingleton.instance.setLevel(level)
+    this.level = level
 }
 
 def fatal(def message) {
@@ -40,7 +41,8 @@ def trace(def message) {
 }
 
 def call(LogLevel level = LogLevel.ALL, String message = "Empty.") {
-    if (getLevel().value >= level.value) {
+    // Will initialize global level if it has not been.
+    if (getLevel().getValue() >= level.getValue()) {
         echo "${level}: ${message}"
     }
 }
