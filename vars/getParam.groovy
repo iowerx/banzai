@@ -20,12 +20,10 @@ def call( String name ) {
     }
 
     // If Environment has priority, then Environment.
-    // Otherwise, if Param is null or false, then Environment.
+    // Otherwise, if Parameter is null/empty/false, then Environment.
     // Otherwise, Parameter.
-    // Boolean may be null, uses short circuit evaluation. 
-    // !pval is Groovy truth applicable to strings.
-    def val = priority ? eVal : ((pVal == null || !pVal) ? eVal : pVal)
-    
+    def val = priority ? eVal : (pVal ?: eVal)
+
     // Boolean parameter types are returned as boolean.
     switch (pVal?.getClass()?.getName()) {
         case 'java.lang.Boolean':

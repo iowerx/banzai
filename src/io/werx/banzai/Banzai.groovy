@@ -48,24 +48,24 @@ class Banzai implements Serializable {
                 script.parallel stages
                 */
 
-                def banzaiStages = new BanzaiStages()
+                def bzStages = new BzStages()
 
-                banzaiStages.add("1st", {
+                bzStages.add("1st", {
                     script.log INFO, "first"
                     // script.result UNSTABLE
                 })
 
-                banzaiStages.add("2nd", {
+                bzStages.add("2nd", {
                     script.log INFO, "second"
                     // script.result FAILURE
                 })
 
-                banzaiStages.add("3rd", {
+                bzStages.add("3rd", {
                     script.log INFO, "third"
                     // script.result NOT_BUILT, "just because."
                 })
 
-                script.parallel banzaiStages.tasks
+                script.parallel bzStages.tasks
 
                 // BanzaiStage
 
